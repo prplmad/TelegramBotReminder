@@ -22,7 +22,7 @@ namespace NoteBot
             _telegramBotService = telegramBotService;
         }
 
-        public async Task<TelegramBotClient> GetBot()
+        public async Task<TelegramBotClient> GetBotAsync()
         {
             if (_botClient != null)
             {
@@ -37,7 +37,7 @@ namespace NoteBot
 
         public async Task RemindSender()
         {
-            await _telegramBotService.RemindSender(_botClient);
+            await _telegramBotService.RemindSenderAsync(_botClient);
         }
     }
 }

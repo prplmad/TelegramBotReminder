@@ -14,9 +14,9 @@ namespace Business
             _statesRepository = statesRepository;
         }
 
-        public async Task<bool> UpdateState(User user)
+        public async Task<bool> UpdateStateAsync(User user)
         {
-            await _statesRepository.UpdateState(user);
+            await _statesRepository.UpdateStateAsync(user);
             return true;
         }
     }

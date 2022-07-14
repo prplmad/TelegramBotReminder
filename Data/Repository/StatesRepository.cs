@@ -15,7 +15,7 @@ namespace DataStore.Repository
             _db = db;
         }
 
-        public async Task<bool> UpdateState(User user)
+        public async Task<bool> UpdateStateAsync(User user)
         {
             StateEntity state = await _db.States.SingleOrDefaultAsync(x => x.UserId == user.Id);
             state.TelegramState = (TelegramState)user.State;
@@ -24,7 +24,7 @@ namespace DataStore.Repository
             return true;
         }
 
-        public async Task<bool> AddState(User user)
+        public async Task<bool> AddStateAsync(User user)
         {
             StateEntity stateEntity = new();
             stateEntity.UpdatedAt = DateTime.Now;

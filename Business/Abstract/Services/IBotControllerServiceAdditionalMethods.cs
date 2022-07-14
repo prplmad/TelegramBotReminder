@@ -8,11 +8,11 @@ namespace Business.Abstract.Services
 {
     public interface IBotControllerServiceAdditionalMethods
     {
-        Task<bool> ChooseState(ITelegramBotClient botClient, Message message, Models.User user);
-        Task AddNote(ITelegramBotClient botClient, Message message, Models.User user);
-        Task DeleteNote(ITelegramBotClient botClient, Message message, Models.User user);
-        Task AddRemind(ITelegramBotClient botClient, Message message, Models.User user);
-        Task DeleteRemind(ITelegramBotClient botClient, Message message, Models.User user);
-        Task<bool> SetDate(ITelegramBotClient botClient, Message message, Models.User user);
+        Task<bool> ChooseStateAsync(ITelegramBotClient botClient, Message message, Models.User user);
+        Task AddNoteAsync(ITelegramBotClient botClient, Message message, Models.User user);
+        Task DeleteNoteAsync(ITelegramBotClient botClient, Message message, Models.User user);
+        Task AddRemindAsync(ITelegramBotClient botClient, Message message, Models.User user);
+        Task DeleteRemindAsync(ITelegramBotClient botClient, Message message, Models.User user);
+        Task<bool> SetDateAsync(ITelegramBotClient botClient, Message message, Models.User user);
     }
 }

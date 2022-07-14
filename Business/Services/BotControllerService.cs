@@ -26,20 +26,20 @@ namespace Business.Services
             _logger = logger;
         }
 
-        public async Task BotOnMessageReceived(ITelegramBotClient botClient, Message message, Models.User user)
+        public async Task BotOnMessageReceivedAsync(ITelegramBotClient botClient, Message message, Models.User user)
         {
             State state = State.None;
 
             if (await _messageWrapper.FromBot(botClient, message) is false)
             {
-                bool doesUserExist = await _usersService.DoesUserExist(user); // вызываем метод проверки пользователя на наличие в БД
+                bool doesUserExist = await _usersService.DoesUserExistAsync(user); // вызываем метод проверки пользователя на наличие в БД
                 if (doesUserExist)
                 {
-                    state = await _usersService.GetState(user);
+                    state = await _usersService.GetStateAsync(user);
                 }
                 else
                 {
-                    await _usersService.AddUser(user);
+                    await _usersService.AddUserAsync(user);
                 }
 
             }
@@ -47,22 +47,22 @@ namespace Business.Services
             switch (state)
             {
                 case State.None:
-                    await _botControllerServiceAdditionalMethods.ChooseState(botClient, message, user);
+                    await _botControllerServiceAdditionalMethods.ChooseStateAsync(botClient, message, user);
                     break;
                 case State.Note:
-                    await _botControllerServiceAdditionalMethods.AddNote(botClient, message, user);
+                    await _botControllerServiceAdditionalMethods.AddNoteAsync(botClient, message, user);
                     break;
                 case State.DeleteNote:
-                    await _botControllerServiceAdditionalMethods.DeleteNote(botClient, message, user);
+                    await _botControllerServiceAdditionalMethods.DeleteNoteAsync(botClient, message, user);
                     break;
                 case State.Remind:
-                    await _botControllerServiceAdditionalMethods.AddRemind(botClient, message, user);
+                    await _botControllerServiceAdditionalMethods.AddRemindAsync(botClient, message, user);
                     break;
                 case State.DeleteRemind:
-                    await _botControllerServiceAdditionalMethods.DeleteRemind(botClient, message, user);
+                    await _botControllerServiceAdditionalMethods.DeleteRemindAsync(botClient, message, user);
                     break;
                 case State.SetDate:
-                    await _botControllerServiceAdditionalMethods.SetDate(botClient, message, user);
+                    await _botControllerServiceAdditionalMethods.SetDateAsync(botClient, message, user);
                     break;
             }
             _logger.LogInformation($"Recieved message from user {user.Id} is \n \"{message.Text}\"");

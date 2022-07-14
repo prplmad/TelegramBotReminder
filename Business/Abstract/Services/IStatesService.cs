@@ -7,6 +7,6 @@ namespace Business.Abstract.Services
 {
     public interface IStatesService
     {
-        Task<bool> UpdateState(User user);
+        Task<bool> UpdateStateAsync(User user);
     }
 }

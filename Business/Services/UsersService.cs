@@ -14,21 +14,21 @@ namespace Services
             _usersRepository = usersRepository;
         }
 
-        public async Task<State> GetState(User user)
+        public async Task<State> GetStateAsync(User user)
         {
             State state;
-            return state = await _usersRepository.GetState(user);
+            return state = await _usersRepository.GetStateAsync(user);
         }
 
-        public async Task<bool> DoesUserExist(User user)
+        public async Task<bool> DoesUserExistAsync(User user)
         {
             bool result;
-            return result = await _usersRepository.DoesUserExist(user);
+            return result = await _usersRepository.DoesUserExistAsync(user);
         }
 
-        public async Task AddUser(User user)
+        public async Task AddUserAsync(User user)
         {
-            await _usersRepository.AddUser(user);
+            await _usersRepository.AddUserAsync(user);
         }
 
     }

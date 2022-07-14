@@ -17,7 +17,7 @@ namespace DataStore.Repository
         {
             _db = db;
         }
-        public async Task<bool> AddNote(Note note, CancellationToken ct = default)
+        public async Task<bool> AddNoteAsync(Note note, CancellationToken ct = default)
         {
             NoteEntity noteEntity = note.FromBusinessToEntities();
             var UserId = note.UserId;
@@ -27,7 +27,7 @@ namespace DataStore.Repository
             return true;
         }
 
-        public async Task<IReadOnlyCollection<Note>> GetNotes(User user, CancellationToken ct = default)
+        public async Task<IReadOnlyCollection<Note>> GetNotesAsync(User user, CancellationToken ct = default)
         {
             await Task.Delay(0);
             UserEntity userEntity = user.FromBusinessToEntities();
@@ -40,7 +40,7 @@ namespace DataStore.Repository
             return listOfNotes;
         }
 
-        public async Task<bool> DeleteNote(Note note, CancellationToken ct = default)
+        public async Task<bool> DeleteNoteAsync(Note note, CancellationToken ct = default)
         {
             NoteEntity noteEntity = note.FromBusinessToEntities();
             NoteEntity _note = await _db.Notes.FindAsync(noteEntity.Id);

@@ -8,10 +8,10 @@ namespace Business.Abstract.Repositories
 {
     public interface IRemindsRepository
     {
-        Task<bool> AddRemind(Remind remind);
-        Task<bool> SetDate(Remind remind);
-        Task<bool> DeleteRemind(Remind remind);
-        Task<IReadOnlyCollection<Remind>> GetReminds(User user);
-        Task SendRemind(ITelegramBotClient botClient);
+        Task<bool> AddRemindAsync(Remind remind);
+        Task<bool> SetDateAsync(Remind remind);
+        Task<bool> DeleteRemindAsync(Remind remind);
+        Task<IReadOnlyCollection<Remind>> GetRemindsAsync(User user);
+        Task SendRemindAsync(ITelegramBotClient botClient);
     }
 }

@@ -7,6 +7,6 @@ namespace Business.Abstract.Services
 {
     public interface ITelegramBotService
     {
-        Task RemindSender(ITelegramBotClient botClient);
+        Task RemindSenderAsync(ITelegramBotClient botClient);
     }
 }

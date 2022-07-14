@@ -13,11 +13,11 @@ namespace Business.Services
             _remindsService = remindsService;
         }
 
-        public async Task RemindSender(ITelegramBotClient botClient)
+        public async Task RemindSenderAsync(ITelegramBotClient botClient)
         {
             while (true)
             {
-                await _remindsService.SendRemind(botClient);
+                await _remindsService.SendRemindAsync(botClient);
                 Thread.Sleep(5000);
             }
         }

@@ -22,7 +22,7 @@ namespace DataStore.Repository
             _db = db;
             _TelegramBotClientWrapper = TelegramBotClientWrapper;
         }
-        public async Task<bool> AddRemind(Remind remind)
+        public async Task<bool> AddRemindAsync(Remind remind)
         {
             RemindEntity remindEntity = remind.FromBusinessToEntities();
             var UserId = remind.UserId;
@@ -32,7 +32,7 @@ namespace DataStore.Repository
             return true;
         }
 
-        public async Task<IReadOnlyCollection<Remind>> GetReminds(User user)
+        public async Task<IReadOnlyCollection<Remind>> GetRemindsAsync(User user)
         {
             await Task.Delay(0);
             UserEntity userEntity = user.FromBusinessToEntities();
@@ -46,7 +46,7 @@ namespace DataStore.Repository
 
         }
 
-        public async Task<bool> SetDate(Remind remind)
+        public async Task<bool> SetDateAsync(Remind remind)
         {
             RemindEntity remindEntity = remind.FromBusinessToEntities();
             var UserId = remind.UserId;
@@ -64,7 +64,7 @@ namespace DataStore.Repository
             return true;
         }
 
-        public async Task<bool> DeleteRemind(Remind remind)
+        public async Task<bool> DeleteRemindAsync(Remind remind)
         {
             RemindEntity remindEntity = remind.FromBusinessToEntities();
             RemindEntity _remind = await _db.Reminds.FindAsync(remindEntity.Id);
@@ -81,7 +81,7 @@ namespace DataStore.Repository
             }
         }
 
-        public async Task SendRemind(ITelegramBotClient botClient)
+        public async Task SendRemindAsync(ITelegramBotClient botClient)
         {
             {
                 var user = _db.Users.Include(s => s.Reminds);

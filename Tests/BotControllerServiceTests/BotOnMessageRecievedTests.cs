@@ -41,84 +41,84 @@ namespace Tests.BotControllerServiceTests
         {
             //Arrange
             _messageWrapper.Setup(m => m.FromBot(_botClient.Object, _message)).ReturnsAsync(false);
-            _usersService.Setup(gs => gs.GetState(It.IsAny<Business.Models.User>())).ReturnsAsync(State.None);
-            _usersService.Setup(due => due.DoesUserExist(It.IsAny<Business.Models.User>())).ReturnsAsync(true);
+            _usersService.Setup(gs => gs.GetStateAsync(It.IsAny<Business.Models.User>())).ReturnsAsync(State.None);
+            _usersService.Setup(due => due.DoesUserExistAsync(It.IsAny<Business.Models.User>())).ReturnsAsync(true);
 
             //Act
-            await _botControllerService.BotOnMessageReceived(_botClient.Object, _message, _user);
+            await _botControllerService.BotOnMessageReceivedAsync(_botClient.Object, _message, _user);
 
             //Verify
-            _botControllerServiceAdditionalMethods.Verify(cs => cs.ChooseState(_botClient.Object, _message, _user));
+            _botControllerServiceAdditionalMethods.Verify(cs => cs.ChooseStateAsync(_botClient.Object, _message, _user));
         }
 
         [Test]
         public async Task BotOnMessageRecieved_StateNote()
         {
             //Arrange
-            _usersService.Setup(due => due.DoesUserExist(It.IsAny<Business.Models.User>())).ReturnsAsync(true);
-            _usersService.Setup(gs => gs.GetState(It.IsAny<Business.Models.User>())).ReturnsAsync(State.Note);
+            _usersService.Setup(due => due.DoesUserExistAsync(It.IsAny<Business.Models.User>())).ReturnsAsync(true);
+            _usersService.Setup(gs => gs.GetStateAsync(It.IsAny<Business.Models.User>())).ReturnsAsync(State.Note);
 
             //Act
-            await _botControllerService.BotOnMessageReceived(_botClient.Object, _message, _user);
+            await _botControllerService.BotOnMessageReceivedAsync(_botClient.Object, _message, _user);
 
             //Verify
-            _botControllerServiceAdditionalMethods.Verify(an => an.AddNote(_botClient.Object, _message, _user));
+            _botControllerServiceAdditionalMethods.Verify(an => an.AddNoteAsync(_botClient.Object, _message, _user));
         }
 
         [Test]
         public async Task BotOnMessageRecieved_StateDeleteNote()
         {
             //Arrange
-            _usersService.Setup(due => due.DoesUserExist(It.IsAny<Business.Models.User>())).ReturnsAsync(true);
-            _usersService.Setup(gs => gs.GetState(It.IsAny<Business.Models.User>())).ReturnsAsync(State.DeleteNote);
+            _usersService.Setup(due => due.DoesUserExistAsync(It.IsAny<Business.Models.User>())).ReturnsAsync(true);
+            _usersService.Setup(gs => gs.GetStateAsync(It.IsAny<Business.Models.User>())).ReturnsAsync(State.DeleteNote);
 
             //Act
-            await _botControllerService.BotOnMessageReceived(_botClient.Object, _message, _user);
+            await _botControllerService.BotOnMessageReceivedAsync(_botClient.Object, _message, _user);
 
             //Verify
-            _botControllerServiceAdditionalMethods.Verify(dn => dn.DeleteNote(_botClient.Object, _message, _user));
+            _botControllerServiceAdditionalMethods.Verify(dn => dn.DeleteNoteAsync(_botClient.Object, _message, _user));
         }
 
         [Test]
         public async Task BotOnMessageRecieved_AddRemind()
         {
             //Arrange
-            _usersService.Setup(due => due.DoesUserExist(It.IsAny<Business.Models.User>())).ReturnsAsync(true);
-            _usersService.Setup(gs => gs.GetState(It.IsAny<Business.Models.User>())).ReturnsAsync(State.Remind);
+            _usersService.Setup(due => due.DoesUserExistAsync(It.IsAny<Business.Models.User>())).ReturnsAsync(true);
+            _usersService.Setup(gs => gs.GetStateAsync(It.IsAny<Business.Models.User>())).ReturnsAsync(State.Remind);
 
             //Act
-            await _botControllerService.BotOnMessageReceived(_botClient.Object, _message, _user);
+            await _botControllerService.BotOnMessageReceivedAsync(_botClient.Object, _message, _user);
 
             //Verify
-            _botControllerServiceAdditionalMethods.Verify(ar => ar.AddRemind(_botClient.Object, _message, _user));
+            _botControllerServiceAdditionalMethods.Verify(ar => ar.AddRemindAsync(_botClient.Object, _message, _user));
         }
 
         [Test]
         public async Task BotOnMessageRecieved_StateDeleteRemind()
         {
             //Arrange
-            _usersService.Setup(due => due.DoesUserExist(It.IsAny<Business.Models.User>())).ReturnsAsync(true);
-            _usersService.Setup(gs => gs.GetState(It.IsAny<Business.Models.User>())).ReturnsAsync(State.DeleteRemind);
+            _usersService.Setup(due => due.DoesUserExistAsync(It.IsAny<Business.Models.User>())).ReturnsAsync(true);
+            _usersService.Setup(gs => gs.GetStateAsync(It.IsAny<Business.Models.User>())).ReturnsAsync(State.DeleteRemind);
 
             //Act
-            await _botControllerService.BotOnMessageReceived(_botClient.Object, _message, _user);
+            await _botControllerService.BotOnMessageReceivedAsync(_botClient.Object, _message, _user);
 
             //Verify
-            _botControllerServiceAdditionalMethods.Verify(dr => dr.DeleteRemind(_botClient.Object, _message, _user));
+            _botControllerServiceAdditionalMethods.Verify(dr => dr.DeleteRemindAsync(_botClient.Object, _message, _user));
         }
 
         [Test]
         public async Task BotOnMessageRecieved_StateSetDate()
         {
             //Arrange
-            _usersService.Setup(due => due.DoesUserExist(It.IsAny<Business.Models.User>())).ReturnsAsync(true);
-            _usersService.Setup(gs => gs.GetState(It.IsAny<Business.Models.User>())).ReturnsAsync(State.SetDate);
+            _usersService.Setup(due => due.DoesUserExistAsync(It.IsAny<Business.Models.User>())).ReturnsAsync(true);
+            _usersService.Setup(gs => gs.GetStateAsync(It.IsAny<Business.Models.User>())).ReturnsAsync(State.SetDate);
 
             //Act
-            await _botControllerService.BotOnMessageReceived(_botClient.Object, _message, _user);
+            await _botControllerService.BotOnMessageReceivedAsync(_botClient.Object, _message, _user);
 
             //Verify
-            _botControllerServiceAdditionalMethods.Verify(sd => sd.SetDate(_botClient.Object, _message, _user));
+            _botControllerServiceAdditionalMethods.Verify(sd => sd.SetDateAsync(_botClient.Object, _message, _user));
         }
     }
 }

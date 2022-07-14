@@ -46,7 +46,7 @@ namespace Tests.BotControllerServiceAdditionalMethodsTests
             _message.Text = "2029-03-01 20:00"; // Некорректный формат даты
 
             //Act
-            await _botControllerServiceAdditionalMethods.SetDate(_botClient.Object, _message, _user);
+            await _botControllerServiceAdditionalMethods.SetDateAsync(_botClient.Object, _message, _user);
 
             //Verify
             _telegramBotClientWrapper.Verify(stm => stm.SendTextMessageAsync(_botClient.Object, It.IsAny<ChatId>(), "Некорректный формат даты, введите заново!\nФормат даты: dd.mm.yyyy hh:mm"));
@@ -58,10 +58,10 @@ namespace Tests.BotControllerServiceAdditionalMethodsTests
             _message.Text = "07.01.2029 20:00"; // Корректный формат даты
 
             //Act
-            await _botControllerServiceAdditionalMethods.SetDate(_botClient.Object, _message, _user);
+            await _botControllerServiceAdditionalMethods.SetDateAsync(_botClient.Object, _message, _user);
 
             //Verify
-            _remindsService.Verify(sd => sd.SetDate(It.IsAny<Business.Models.User>(), It.IsAny<DateTime>()));
+            _remindsService.Verify(sd => sd.SetDateAsync(It.IsAny<Business.Models.User>(), It.IsAny<DateTime>()));
             _telegramBotClientWrapper.Verify(stm => stm.SendTextMessageAsync(_botClient.Object, It.IsAny<ChatId>(), "Напоминание успешно создано"));
         }
 
@@ -72,7 +72,7 @@ namespace Tests.BotControllerServiceAdditionalMethodsTests
             _message.Text = "07.01.2021 20:00"; // Корректный формат даты
 
             //Act
-            await _botControllerServiceAdditionalMethods.SetDate(_botClient.Object, _message, _user);
+            await _botControllerServiceAdditionalMethods.SetDateAsync(_botClient.Object, _message, _user);
 
             //Verify
             _telegramBotClientWrapper.Verify(stm => stm.SendTextMessageAsync(_botClient.Object, It.IsAny<ChatId>(), "Дата не может быть в прошлом, введите заново!\nФормат даты: dd.mm.yyyy hh:mm"));

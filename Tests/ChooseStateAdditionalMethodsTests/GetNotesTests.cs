@@ -44,10 +44,10 @@ namespace Tests.ChooseStateAdditionalMethodsTests
         public async Task GetNotes_NotesServiceReturnedAnEmptyList()
         {
             //Arrange
-            _notesService.Setup(gn => gn.GetNotes(_user)).ReturnsAsync(_emptyList);
+            _notesService.Setup(gn => gn.GetNotesAsync(_user)).ReturnsAsync(_emptyList);
 
             //Act
-            await _chooseStateAdditionalMethods.GetNotes(_botClient.Object, _message, _user);
+            await _chooseStateAdditionalMethods.GetNotesAsync(_botClient.Object, _message, _user);
 
             //Verify
             _telegramBotClientWrapper.Verify(stma => stma.SendTextMessageAsync(_botClient.Object, It.IsAny<ChatId>(), "Заметки отсутствуют"));
@@ -57,10 +57,10 @@ namespace Tests.ChooseStateAdditionalMethodsTests
         public async Task GetNotes_NotesServiceReturnedNotAnEmptyList()
         {
             //Arrange
-            _notesService.Setup(gn => gn.GetNotes(_user)).ReturnsAsync(_notAnEmptyList);
+            _notesService.Setup(gn => gn.GetNotesAsync(_user)).ReturnsAsync(_notAnEmptyList);
 
             //Act
-            await _chooseStateAdditionalMethods.GetNotes(_botClient.Object, _message, _user);
+            await _chooseStateAdditionalMethods.GetNotesAsync(_botClient.Object, _message, _user);
 
             //Verify
             _telegramBotClientWrapper.Verify(stma => stma.SendTextMessageAsync(_botClient.Object, It.IsAny<ChatId>(), "Заметки отсутсвуют"), Times.Never());

@@ -46,7 +46,7 @@ namespace Tests.BotControllerServiceAdditionalMethodsTests
             _message.Text = "TextInsteadOfId"; // Текст вместо числа
 
             //Act
-            await _botControllerServiceAdditionalMethods.DeleteRemind(_botClient.Object, _message, _user);
+            await _botControllerServiceAdditionalMethods.DeleteRemindAsync(_botClient.Object, _message, _user);
 
             //Verify
             _telegramBotClientWrapper.Verify(stm => stm.SendTextMessageAsync(_botClient.Object, It.IsAny<ChatId>(), "Напоминания с таким Id не существует"));
@@ -56,11 +56,11 @@ namespace Tests.BotControllerServiceAdditionalMethodsTests
         public async Task DeleteRemind_CorrectId()
         {
             //Arrange
-            _remindsService.Setup(gs => gs.DeleteRemind(It.IsAny<Business.Models.User>(), It.IsAny<int>())).ReturnsAsync(true);
+            _remindsService.Setup(gs => gs.DeleteRemindAsync(It.IsAny<Business.Models.User>(), It.IsAny<int>())).ReturnsAsync(true);
             _message.Text = "7"; //Корректный Id
 
             //Act
-            await _botControllerServiceAdditionalMethods.DeleteRemind(_botClient.Object, _message, _user);
+            await _botControllerServiceAdditionalMethods.DeleteRemindAsync(_botClient.Object, _message, _user);
 
             //Verify
             _telegramBotClientWrapper.Verify(stm => stm.SendTextMessageAsync(_botClient.Object, It.IsAny<ChatId>(), "Напоминание удалено"));
@@ -70,11 +70,11 @@ namespace Tests.BotControllerServiceAdditionalMethodsTests
         public async Task DeleteRemind_RemindsServiceDeleteRemindMethodReturnsFalse()
         {
             //Arrange
-            _remindsService.Setup(gs => gs.DeleteRemind(It.IsAny<Business.Models.User>(), It.IsAny<int>())).ReturnsAsync(false);
+            _remindsService.Setup(gs => gs.DeleteRemindAsync(It.IsAny<Business.Models.User>(), It.IsAny<int>())).ReturnsAsync(false);
             _message.Text = "7"; // Корректный Id
 
             //Act
-            await _botControllerServiceAdditionalMethods.DeleteRemind(_botClient.Object, _message, _user);
+            await _botControllerServiceAdditionalMethods.DeleteRemindAsync(_botClient.Object, _message, _user);
 
             //Verify
             _telegramBotClientWrapper.Verify(stm => stm.SendTextMessageAsync(_botClient.Object, It.IsAny<ChatId>(), "Напоминания с таким Id не существует"));

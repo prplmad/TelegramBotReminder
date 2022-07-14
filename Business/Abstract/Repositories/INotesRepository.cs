@@ -7,8 +7,8 @@ namespace Business.Abstract.Repositories
 {
     public interface INotesRepository
     {
-        Task<bool> AddNote(Note note, CancellationToken ct = default);
-        Task<bool> DeleteNote(Note note, CancellationToken ct = default);
-        Task<IReadOnlyCollection<Note>> GetNotes(User user, CancellationToken ct = default);
+        Task<bool> AddNoteAsync(Note note, CancellationToken ct = default);
+        Task<bool> DeleteNoteAsync(Note note, CancellationToken ct = default);
+        Task<IReadOnlyCollection<Note>> GetNotesAsync(User user, CancellationToken ct = default);
     }
 }

@@ -48,7 +48,7 @@ namespace Tests.BotControllerServiceAdditionalMethodsTests
             _message.Text = "TextInsteadOfId"; // Текст вместо числа
 
             //Act
-            await _botControllerServiceAdditionalMethods.DeleteNote(_botClient.Object, _message, _user);
+            await _botControllerServiceAdditionalMethods.DeleteNoteAsync(_botClient.Object, _message, _user);
 
             //Verify
             _telegramBotClientWrapper.Verify(stm => stm.SendTextMessageAsync(_botClient.Object, It.IsAny<ChatId>(), "Заметки с таким Id не существует"));
@@ -58,11 +58,11 @@ namespace Tests.BotControllerServiceAdditionalMethodsTests
         public async Task DeleteNote_CorrectId()
         {
             //Arrange
-            _notesService.Setup(gs => gs.DeleteNote(It.IsAny<Business.Models.User>(), It.IsAny<int>())).ReturnsAsync(true);
+            _notesService.Setup(gs => gs.DeleteNoteAsync(It.IsAny<Business.Models.User>(), It.IsAny<int>())).ReturnsAsync(true);
             _message.Text = "7"; // Корректный Id
 
             //Act
-            await _botControllerServiceAdditionalMethods.DeleteNote(_botClient.Object, _message, _user);
+            await _botControllerServiceAdditionalMethods.DeleteNoteAsync(_botClient.Object, _message, _user);
 
             //Verify
             _telegramBotClientWrapper.Verify(stm => stm.SendTextMessageAsync(_botClient.Object, It.IsAny<ChatId>(), "Заметка удалена"));
@@ -72,11 +72,11 @@ namespace Tests.BotControllerServiceAdditionalMethodsTests
         public async Task DeleteNote_NotesServiceDeleteNoteMethodReturnsFalse()
         {
             //Arrange
-            _notesService.Setup(gs => gs.DeleteNote(It.IsAny<Business.Models.User>(), It.IsAny<int>())).ReturnsAsync(false);
+            _notesService.Setup(gs => gs.DeleteNoteAsync(It.IsAny<Business.Models.User>(), It.IsAny<int>())).ReturnsAsync(false);
             _message.Text = "7"; // Корректный Id
 
             //Act
-            await _botControllerServiceAdditionalMethods.DeleteNote(_botClient.Object, _message, _user);
+            await _botControllerServiceAdditionalMethods.DeleteNoteAsync(_botClient.Object, _message, _user);
 
             //Verify
             _telegramBotClientWrapper.Verify(stm => stm.SendTextMessageAsync(_botClient.Object, It.IsAny<ChatId>(), "Заметки с таким Id не существует"));

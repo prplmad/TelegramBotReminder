@@ -6,8 +6,8 @@ namespace Business.Abstract.Repositories
 {
     public interface IUsersRepository
     {
-        Task<bool> AddUser(User user);
-        Task<State> GetState(User user);
-        Task<bool> DoesUserExist(User user);
+        Task<bool> AddUserAsync(User user);
+        Task<State> GetStateAsync(User user);
+        Task<bool> DoesUserExistAsync(User user);
     }
 }

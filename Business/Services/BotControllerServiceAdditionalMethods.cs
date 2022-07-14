@@ -32,7 +32,7 @@ namespace Business.Services
             _telegramBotClientWrapper = TelegramBotClientWrapper;
             _chooseStateAdditionalMethods = chooseStateAdditionalMethods;
         }
-        public async Task<bool> ChooseState(ITelegramBotClient botClient, Message message, Business.Models.User user)
+        public async Task<bool> ChooseStateAsync(ITelegramBotClient botClient, Message message, Business.Models.User user)
         {
 
             State st;
@@ -48,7 +48,7 @@ namespace Business.Services
                         break;
                     case DELETENOTE:
                         st = State.DeleteNote;
-                        await _chooseStateAdditionalMethods.GetNotes(botClient, message, user);
+                        await _chooseStateAdditionalMethods.GetNotesAsync(botClient, message, user);
                         await _telegramBotClientWrapper.SendTextMessageAsync(botClient, message.Chat, "Введите Id заметки, которую необходимо удалить");
                         break;
                     case ADDREMIND:
@@ -57,7 +57,7 @@ namespace Business.Services
                         break;
                     case DELETEREMIND:
                         st = State.DeleteRemind;
-                        await _chooseStateAdditionalMethods.GetReminds(botClient, message, user);
+                        await _chooseStateAdditionalMethods.GetRemindsAsync(botClient, message, user);
                         await _telegramBotClientWrapper.SendTextMessageAsync(botClient, message.Chat, "Введите Id напоминания, которое необходимо удалить");
                         break;
                     case INFO:
@@ -72,11 +72,11 @@ namespace Business.Services
                         break;
                     case GETNOTES:
                         st = State.None;
-                        await _chooseStateAdditionalMethods.GetNotes(botClient, message, user);
+                        await _chooseStateAdditionalMethods.GetNotesAsync(botClient, message, user);
                         break;
                     case GETREMINDS:
                         st = State.None;
-                        await _chooseStateAdditionalMethods.GetReminds(botClient, message, user);
+                        await _chooseStateAdditionalMethods.GetRemindsAsync(botClient, message, user);
                         break;
                     default:
                         st = State.None;
@@ -95,7 +95,7 @@ namespace Business.Services
             {
                 var businessLayerUser = user;
                 businessLayerUser.State = st;
-                await _statesService.UpdateState(businessLayerUser);
+                await _statesService.UpdateStateAsync(businessLayerUser);
             }
             catch (Exception e)
             {
@@ -103,7 +103,7 @@ namespace Business.Services
             }
             return true;
         }
-        public async Task AddNote(ITelegramBotClient botClient, Message message, Models.User user)
+        public async Task AddNoteAsync(ITelegramBotClient botClient, Message message, Models.User user)
         {
             if (message.Text.Length > 2000)
             {
@@ -111,18 +111,18 @@ namespace Business.Services
             }
             else
             {
-                await _notesService.AddNote(user, message.Text);
+                await _notesService.AddNoteAsync(user, message.Text);
                 await _telegramBotClientWrapper.SendTextMessageAsync(botClient, message.Chat, "Заметка создана");
             }
         }
-        public async Task DeleteNote(ITelegramBotClient botClient, Message message, Models.User user)
+        public async Task DeleteNoteAsync(ITelegramBotClient botClient, Message message, Models.User user)
         {
             try
             {
                 bool result = int.TryParse(message.Text, out int id);
                 if (result == true)
                 {
-                    if (await _notesService.DeleteNote(user, id) == true)
+                    if (await _notesService.DeleteNoteAsync(user, id) == true)
                     {
                         await _telegramBotClientWrapper.SendTextMessageAsync(botClient, message.Chat, "Заметка удалена");
                     }
@@ -142,7 +142,7 @@ namespace Business.Services
             }
         }
 
-        public async Task AddRemind(ITelegramBotClient botClient, Message message, Models.User user)
+        public async Task AddRemindAsync(ITelegramBotClient botClient, Message message, Models.User user)
         {
             if (message.Text.Length > 2000)
             {
@@ -151,19 +151,19 @@ namespace Business.Services
             }
             else
             {
-                await _remindsService.AddRemind(user, message.Text);
+                await _remindsService.AddRemindAsync(user, message.Text);
                 await _telegramBotClientWrapper.SendTextMessageAsync(botClient, message.Chat, "Введите дату напоминания в формате: dd.mm.yyyy hh:mm");
             }
         }
 
-        public async Task DeleteRemind(ITelegramBotClient botClient, Message message, Models.User user)
+        public async Task DeleteRemindAsync(ITelegramBotClient botClient, Message message, Models.User user)
         {
             try
             {
                 bool result = int.TryParse(message.Text, out int id);
                 if (result)
                 {
-                    if (await _remindsService.DeleteRemind(user, id) == true)
+                    if (await _remindsService.DeleteRemindAsync(user, id) == true)
                     {
                         await _telegramBotClientWrapper.SendTextMessageAsync(botClient, message.Chat, "Напоминание удалено");
                     }
@@ -182,7 +182,7 @@ namespace Business.Services
                 await _telegramBotClientWrapper.SendTextMessageAsync(botClient, message.Chat, "Напоминания с таким Id не существует");
             }
         }
-        public async Task<bool> SetDate(ITelegramBotClient botClient, Message message, Models.User user)
+        public async Task<bool> SetDateAsync(ITelegramBotClient botClient, Message message, Models.User user)
         {
             Regex regex = new(@"\d{2}\W\d{2}\W\d{4}\s\d{2}:\d{2}");
             MatchCollection matches = regex.Matches(message.Text);
@@ -200,7 +200,7 @@ namespace Business.Services
             }
             else
             {
-                await _remindsService.SetDate(user, date);
+                await _remindsService.SetDateAsync(user, date);
                 await _telegramBotClientWrapper.SendTextMessageAsync(botClient, message.Chat, "Напоминание успешно создано");
                 return true;
             }

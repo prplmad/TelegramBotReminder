@@ -44,10 +44,10 @@ namespace Tests.ChooseStateAdditionalMethodsTests
         public async Task GetNotes_NotesServiceReturnedAnEmptyList()
         {
             //Arrange
-            _remindsService.Setup(gn => gn.GetReminds(_user)).ReturnsAsync(_emptyList);
+            _remindsService.Setup(gn => gn.GetRemindsAsync(_user)).ReturnsAsync(_emptyList);
 
             //Act
-            await _chooseStateAdditionalMethods.GetReminds(_botClient.Object, _message, _user);
+            await _chooseStateAdditionalMethods.GetRemindsAsync(_botClient.Object, _message, _user);
 
             //Verify
             _telegramBotClientWrapper.Verify(stma => stma.SendTextMessageAsync(_botClient.Object, It.IsAny<ChatId>(), "Напоминания отсутствуют"));
@@ -57,10 +57,10 @@ namespace Tests.ChooseStateAdditionalMethodsTests
         public async Task GetNotes_NotesServiceReturnedNotAnEmptyList()
         {
             //Arrange
-            _remindsService.Setup(gn => gn.GetReminds(_user)).ReturnsAsync(_notAnEmptyList);
+            _remindsService.Setup(gn => gn.GetRemindsAsync(_user)).ReturnsAsync(_notAnEmptyList);
 
             //Act
-            await _chooseStateAdditionalMethods.GetReminds(_botClient.Object, _message, _user);
+            await _chooseStateAdditionalMethods.GetRemindsAsync(_botClient.Object, _message, _user);
 
             //Verify
             _telegramBotClientWrapper.Verify(stma => stma.SendTextMessageAsync(_botClient.Object, It.IsAny<ChatId>(), "Напоминания отсутствуют"), Times.Never());

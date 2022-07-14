@@ -8,7 +8,7 @@ namespace Business.Abstract.Services
 {
     public interface IChooseStateAdditionalMethods
     {
-        Task GetNotes(ITelegramBotClient telegramBot, Message message, Models.User user);
-        Task GetReminds(ITelegramBotClient telegramBot, Message message, Models.User user);
+        Task GetNotesAsync(ITelegramBotClient telegramBot, Message message, Models.User user);
+        Task GetRemindsAsync(ITelegramBotClient telegramBot, Message message, Models.User user);
     }
 }

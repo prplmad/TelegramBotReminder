@@ -6,7 +6,7 @@ namespace Business.Abstract.Repositories
 {
     public interface IStatesRepository
     {
-        Task<bool> AddState(User user);
-        Task<bool> UpdateState(User user);
+        Task<bool> AddStateAsync(User user);
+        Task<bool> UpdateStateAsync(User user);
     }
 }

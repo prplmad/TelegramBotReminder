@@ -16,39 +16,39 @@ namespace Services
             _notesRepository = notesRepository;
             _statesRepository = statesRepository;
         }
-        public async Task<bool> AddNote(User user, string text)
+        public async Task<bool> AddNoteAsync(User user, string text)
         {
             Note note = new();
             note.Text = text;
             note.UserId = user.Id;
             note.CreatedAt = DateTime.Now;
-            await _notesRepository.AddNote(note);
+            await _notesRepository.AddNoteAsync(note);
             user.State = State.None;
-            await _statesRepository.UpdateState(user);
+            await _statesRepository.UpdateStateAsync(user);
             return true;
         }
 
 
-        public async Task<IReadOnlyCollection<Note>> GetNotes(User user)
+        public async Task<IReadOnlyCollection<Note>> GetNotesAsync(User user)
         {
-            var listOfNotes = await _notesRepository.GetNotes(user);
+            var listOfNotes = await _notesRepository.GetNotesAsync(user);
             return listOfNotes;
         }
 
-        public async Task<bool> DeleteNote(User user, int noteid)
+        public async Task<bool> DeleteNoteAsync(User user, int noteid)
         {
             Note note = new();
             note.Id = noteid;
-            if (await _notesRepository.DeleteNote(note) == true)
+            if (await _notesRepository.DeleteNoteAsync(note) == true)
             {
                 user.State = State.None;
-                await _statesRepository.UpdateState(user);
+                await _statesRepository.UpdateStateAsync(user);
                 return true;
             }
             else
             {
                 user.State = State.None;
-                await _statesRepository.UpdateState(user);
+                await _statesRepository.UpdateStateAsync(user);
                 return false;
             }
         }

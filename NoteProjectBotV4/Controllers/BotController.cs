@@ -19,7 +19,7 @@ namespace NoteBot.Controllers
 
         public BotController(TelegramBot telegramBot, IBotControllerService botControllerService)
         {
-            _telegramBotClient = telegramBot.GetBot().Result;
+            _telegramBotClient = telegramBot.GetBotAsync().Result;
             _botControllerService = botControllerService;
         }
 
@@ -29,8 +29,8 @@ namespace NoteBot.Controllers
             var user = update.Message.From.FromApiToBusiness();
             var handler = update.Type switch
             {
-                UpdateType.Message => _botControllerService.BotOnMessageReceived(_telegramBotClient, update.Message, user),
-                UpdateType.EditedMessage => _botControllerService.BotOnMessageReceived(_telegramBotClient, update.EditedMessage, user),
+                UpdateType.Message => _botControllerService.BotOnMessageReceivedAsync(_telegramBotClient, update.Message, user),
+                UpdateType.EditedMessage => _botControllerService.BotOnMessageReceivedAsync(_telegramBotClient, update.EditedMessage, user),
                 _ => throw new NotImplementedException()
             };
             try

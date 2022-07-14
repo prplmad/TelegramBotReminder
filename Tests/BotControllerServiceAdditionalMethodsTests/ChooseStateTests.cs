@@ -45,7 +45,7 @@ namespace Tests.BotControllerServiceAdditionalMethodsTests
             _message.Text = "SomeText";
 
             //Act
-            await _botControllerServiceAdditionalMethods.ChooseState(_botClient.Object, _message, _user);
+            await _botControllerServiceAdditionalMethods.ChooseStateAsync(_botClient.Object, _message, _user);
 
             //Verify
             _telegramBotClientWrapper.Verify(stm => stm.SendTextMessageAsync(_botClient.Object, It.IsAny<ChatId>(), "Я не понимаю этой команды!\nПомощь /info"));
@@ -58,7 +58,7 @@ namespace Tests.BotControllerServiceAdditionalMethodsTests
             _message.Text = "/addnote";
 
             //Act
-            await _botControllerServiceAdditionalMethods.ChooseState(_botClient.Object, _message, _user);
+            await _botControllerServiceAdditionalMethods.ChooseStateAsync(_botClient.Object, _message, _user);
 
             //Verify
             _telegramBotClientWrapper.Verify(stm => stm.SendTextMessageAsync(_botClient.Object, It.IsAny<ChatId>(), "Напишите текст заметки"));
@@ -71,10 +71,10 @@ namespace Tests.BotControllerServiceAdditionalMethodsTests
             _message.Text = "/deletenote";
 
             //Act
-            await _botControllerServiceAdditionalMethods.ChooseState(_botClient.Object, _message, _user);
+            await _botControllerServiceAdditionalMethods.ChooseStateAsync(_botClient.Object, _message, _user);
 
             //Verify
-            _chooseStateAdditionalMethods.Verify(gn => gn.GetNotes(_botClient.Object, _message, _user));
+            _chooseStateAdditionalMethods.Verify(gn => gn.GetNotesAsync(_botClient.Object, _message, _user));
             _telegramBotClientWrapper.Verify(stm => stm.SendTextMessageAsync(_botClient.Object, It.IsAny<ChatId>(), "Введите Id заметки, которую необходимо удалить"));
 
         }
@@ -86,7 +86,7 @@ namespace Tests.BotControllerServiceAdditionalMethodsTests
             _message.Text = "/addremind";
 
             //Act
-            await _botControllerServiceAdditionalMethods.ChooseState(_botClient.Object, _message, _user);
+            await _botControllerServiceAdditionalMethods.ChooseStateAsync(_botClient.Object, _message, _user);
 
             //Verify
             _telegramBotClientWrapper.Verify(stm => stm.SendTextMessageAsync(_botClient.Object, It.IsAny<ChatId>(), "Напишите текст напоминания"));
@@ -99,10 +99,10 @@ namespace Tests.BotControllerServiceAdditionalMethodsTests
             _message.Text = "/deleteremind";
 
             //Act
-            await _botControllerServiceAdditionalMethods.ChooseState(_botClient.Object, _message, _user);
+            await _botControllerServiceAdditionalMethods.ChooseStateAsync(_botClient.Object, _message, _user);
 
             //Verify
-            _chooseStateAdditionalMethods.Verify(gn => gn.GetReminds(_botClient.Object, _message, _user));
+            _chooseStateAdditionalMethods.Verify(gn => gn.GetRemindsAsync(_botClient.Object, _message, _user));
             _telegramBotClientWrapper.Verify(stm => stm.SendTextMessageAsync(_botClient.Object, It.IsAny<ChatId>(), "Введите Id напоминания, которое необходимо удалить"));
         }
 
@@ -114,7 +114,7 @@ namespace Tests.BotControllerServiceAdditionalMethodsTests
             _message.Text = "/info";
 
             //Act
-            await _botControllerServiceAdditionalMethods.ChooseState(_botClient.Object, _message, _user);
+            await _botControllerServiceAdditionalMethods.ChooseStateAsync(_botClient.Object, _message, _user);
 
             //Verify
             _telegramBotClientWrapper.Verify(stm => stm.SendTextMessageAsync(_botClient.Object, It.IsAny<ChatId>(), "Команды:\n/addnote - создать заметку\n/addremind - создать напоминание\n/getnotes - вывести все заметки\n/getreminds - вывести все запланированные напоминания\n/deletenote - удалить заметку\n/deleteremind - удалить напоминание"));
@@ -127,7 +127,7 @@ namespace Tests.BotControllerServiceAdditionalMethodsTests
             _message.Text = "/start";
 
             //Act
-            await _botControllerServiceAdditionalMethods.ChooseState(_botClient.Object, _message, _user);
+            await _botControllerServiceAdditionalMethods.ChooseStateAsync(_botClient.Object, _message, _user);
 
             //Verify
             _telegramBotClientWrapper.Verify(stm => stm.SendTextMessageAsync(_botClient.Object, It.IsAny<ChatId>(), "Привет!\nДавай начнём работать.\nЧтобы получить список доступных команд - введите /info"));
@@ -140,10 +140,10 @@ namespace Tests.BotControllerServiceAdditionalMethodsTests
             _message.Text = "/getnotes";
 
             //Act
-            await _botControllerServiceAdditionalMethods.ChooseState(_botClient.Object, _message, _user);
+            await _botControllerServiceAdditionalMethods.ChooseStateAsync(_botClient.Object, _message, _user);
 
             //Verify
-            _chooseStateAdditionalMethods.Verify(gn => gn.GetNotes(_botClient.Object, _message, _user));
+            _chooseStateAdditionalMethods.Verify(gn => gn.GetNotesAsync(_botClient.Object, _message, _user));
         }
 
         [Test]
@@ -153,10 +153,10 @@ namespace Tests.BotControllerServiceAdditionalMethodsTests
             _message.Text = "/getreminds";
 
             //Act
-            await _botControllerServiceAdditionalMethods.ChooseState(_botClient.Object, _message, _user);
+            await _botControllerServiceAdditionalMethods.ChooseStateAsync(_botClient.Object, _message, _user);
 
             //Verify
-            _chooseStateAdditionalMethods.Verify(gn => gn.GetReminds(_botClient.Object, _message, _user));
+            _chooseStateAdditionalMethods.Verify(gn => gn.GetRemindsAsync(_botClient.Object, _message, _user));
         }
     }
 }

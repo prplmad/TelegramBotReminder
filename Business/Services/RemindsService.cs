@@ -20,55 +20,55 @@ namespace Services
             _remindsRepository = remindsRepository;
             _statesRepository = statesRepository;
         }
-        public async Task<bool> AddRemind(User user, string text)
+        public async Task<bool> AddRemindAsync(User user, string text)
         {
             Remind remind = new();
             remind.Text = text;
             remind.CreatedAt = DateTime.Now;
             remind.UserId = user.Id;
-            await _remindsRepository.AddRemind(remind);
+            await _remindsRepository.AddRemindAsync(remind);
             user.State = State.SetDate;
-            await _statesRepository.UpdateState(user);
+            await _statesRepository.UpdateStateAsync(user);
             return true;
         }
-        public async Task<bool> SetDate(User user, DateTime date)
+        public async Task<bool> SetDateAsync(User user, DateTime date)
         {
             Remind remind = new();
             remind.RemindDate = date;
             remind.UserId = user.Id;
-            await _remindsRepository.SetDate(remind);
+            await _remindsRepository.SetDateAsync(remind);
             user.State = State.None;
-            await _statesRepository.UpdateState(user);
+            await _statesRepository.UpdateStateAsync(user);
             return true;
         }
 
-        public async Task<bool> DeleteRemind(User user, int remindid)
+        public async Task<bool> DeleteRemindAsync(User user, int remindid)
         {
             Remind remind = new();
             remind.Id = remindid;
-            if (await _remindsRepository.DeleteRemind(remind))
+            if (await _remindsRepository.DeleteRemindAsync(remind))
             {
                 user.State = State.None;
-                await _statesRepository.UpdateState(user);
+                await _statesRepository.UpdateStateAsync(user);
                 return true;
             }
             else
             {
                 user.State = State.None;
-                await _statesRepository.UpdateState(user);
+                await _statesRepository.UpdateStateAsync(user);
                 return false;
             }
         }
 
-        public async Task<IReadOnlyCollection<Remind>> GetReminds(User user)
+        public async Task<IReadOnlyCollection<Remind>> GetRemindsAsync(User user)
         {
-            var listOfReminds = await _remindsRepository.GetReminds(user);
+            var listOfReminds = await _remindsRepository.GetRemindsAsync(user);
             return listOfReminds;
         }
 
-        public async Task SendRemind(ITelegramBotClient botClient)
+        public async Task SendRemindAsync(ITelegramBotClient botClient)
         {
-            await _remindsRepository.SendRemind(botClient);
+            await _remindsRepository.SendRemindAsync(botClient);
         }
 
     }

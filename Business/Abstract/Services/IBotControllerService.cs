@@ -9,7 +9,7 @@ namespace Business.Abstract.Services
 {
     public interface IBotControllerService
     {
-        Task BotOnMessageReceived(ITelegramBotClient botClient, Message message, Business.Models.User user);
+        Task BotOnMessageReceivedAsync(ITelegramBotClient botClient, Message message, Business.Models.User user);
         Task HandleErrorAsync(ITelegramBotClient telegramBot, Exception exception, CancellationToken cancellationToken);
     }
 }

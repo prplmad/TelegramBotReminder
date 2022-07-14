@@ -18,10 +18,10 @@ namespace Business.Services
             _telegramBotClientWrapper = TelegramBotClientWrapper;
         }
 
-        public async Task GetNotes(ITelegramBotClient botClient, Message message, Business.Models.User user)
+        public async Task GetNotesAsync(ITelegramBotClient botClient, Message message, Business.Models.User user)
         {
             int noteCount = 0;
-            var notesList = await _notesService.GetNotes(user);
+            var notesList = await _notesService.GetNotesAsync(user);
             if (notesList.Count == 0)
             {
                 await _telegramBotClientWrapper.SendTextMessageAsync(botClient, message.Chat, "Заметки отсутствуют");
@@ -35,10 +35,10 @@ namespace Business.Services
             }
 
         }
-        public async Task GetReminds(ITelegramBotClient botClient, Message message, Business.Models.User user)
+        public async Task GetRemindsAsync(ITelegramBotClient botClient, Message message, Business.Models.User user)
         {
             int remindCount = 0;
-            var remindsList = await _remindsService.GetReminds(user);
+            var remindsList = await _remindsService.GetRemindsAsync(user);
             if (remindsList.Count == 0)
             {
                 await _telegramBotClientWrapper.SendTextMessageAsync(botClient, message.Chat, "Напоминания отсутствуют");
